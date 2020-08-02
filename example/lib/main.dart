@@ -5,15 +5,80 @@ import 'package:flutter/services.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() {
-  runApp(MyApp());
+  SentryFlutter.init((o) {
+    // NOTE: Replace the DSN below with your own from your project settings in Sentry.
+    o.dsn =
+        'https://39226a237e6b4fa5aae9191fa5732814@o19635.ingest.sentry.io/2078115';
+    o.debug = true;
+  },
+      () =>
+          // Create your root widget below:
+          ExampleApp());
 }
 
-class MyApp extends StatefulWidget {
+class ExampleApp extends StatelessWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Sentry Flutter Example App',
+      home: MyHomePage(),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sentry Flutter Example App'),
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            RaisedButton(
+              child: const Text('Dart exception'),
+              onPressed: () {
+                throw StateError('This is a Dart exception.');
+              },
+            ),
+            RaisedButton(
+              child: const Text('SateError in async method'),
+              onPressed: () async {
+                Future<void> brokenState() async {
+                  throw StateError('State error from async.');
+                }
+
+                await brokenState();
+              },
+            ),
+            RaisedButton(
+              child: const Text('Capture message'),
+              onPressed: () async {
+                await SentryFlutter.captureMessage('Capture message example.');
+              },
+            ),
+            RaisedButton(
+              child: const Text('Platform Exception'),
+              onPressed: () async {
+                const channel = MethodChannel('channel');
+                await channel.invokeMethod<void>('method');
+              },
+            ),
+            PlatformInfoWidget(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PlatformInfoWidget extends StatefulWidget {
+  @override
+  _PlatformInfoWidgetState createState() => _PlatformInfoWidgetState();
+}
+
+class _PlatformInfoWidgetState extends State<PlatformInfoWidget> {
   String _platformVersion = 'Unknown';
 
   @override
@@ -57,15 +122,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
-      ),
-    );
+    return Center(child: Text('Running on: $_platformVersion\n'));
   }
 }
