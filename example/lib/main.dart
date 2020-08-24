@@ -156,10 +156,17 @@ class _MyAppState extends State<MyApp> {
                           null)
                     }),
             RaisedButton(
-              child: const Text('Platform: MethodChannel unknown method'),
+              child: const Text('Platform: unknown MethodChannel'),
               onPressed: () async {
-                const channel = MethodChannel('method_channel');
+                const channel = MethodChannel('unknown');
                 await channel.invokeMethod<void>('unknown');
+              },
+            ),
+            RaisedButton(
+              child: const Text('Platform: Throw Exception'),
+              onPressed: () async {
+                const channel = MethodChannel('example.flutter.sentry.io');
+                await channel.invokeMethod<void>('throw');
               },
             ),
           ],
