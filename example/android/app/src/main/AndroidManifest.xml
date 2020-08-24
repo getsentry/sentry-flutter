@@ -54,6 +54,10 @@
         <meta-data
             android:name="io.sentry.session-tracking.enable"
             android:value="true" />
+        <!-- To quickly demonstrate the ANR capture. Default is 5 seconds. -->
+        <meta-data
+            android:name="io.sentry.anr.timeout-interval-mills"
+            android:value="2000" />
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

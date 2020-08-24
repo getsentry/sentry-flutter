@@ -169,6 +169,27 @@ class _MyAppState extends State<MyApp> {
                 await channel.invokeMethod<void>('throw');
               },
             ),
+            RaisedButton(
+              child: const Text('Platform: Background error'),
+              onPressed: () async {
+                const channel = MethodChannel('example.flutter.sentry.io');
+                await channel.invokeMethod<void>('background');
+              },
+            ),
+            RaisedButton(
+              child: const Text('Platform: try/catch/capture'),
+              onPressed: () async {
+                const channel = MethodChannel('example.flutter.sentry.io');
+                await channel.invokeMethod<void>('capture');
+              },
+            ),
+            RaisedButton(
+              child: const Text('Platform: ANR'),
+              onPressed: () async {
+                const channel = MethodChannel('example.flutter.sentry.io');
+                await channel.invokeMethod<void>('anr');
+              },
+            ),
           ],
         ),
       ),

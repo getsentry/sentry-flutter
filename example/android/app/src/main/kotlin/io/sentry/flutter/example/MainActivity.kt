@@ -1,23 +1,53 @@
 package io.sentry.flutter.example
 
+import android.content.Context
 import androidx.annotation.NonNull
+import androidx.work.*
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import io.sentry.core.Sentry
 
 class MainActivity: FlutterActivity() {
-  private val CHANNEL = "example.flutter.sentry.io"
+  private val _channel = "example.flutter.sentry.io"
 
   override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
     super.configureFlutterEngine(flutterEngine)
-    MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
+    MethodChannel(flutterEngine.dartExecutor.binaryMessenger, _channel).setMethodCallHandler {
       call, result ->
       // Note: this method is invoked on the main thread.
-      if (call.method == "throw") {
-        throw Exception("Thrown from Kotlin!")
-      } else {
-        result.notImplemented()
+      when (call.method) {
+          "throw" -> {
+            throw Exception("Thrown from Kotlin!")
+          }
+          "background" -> {
+            WorkManager.getInstance(this)
+                    .enqueue(OneTimeWorkRequestBuilder<BrokenWorker>()
+                            .build())
+          }
+          "anr" -> {
+            Thread.sleep(6_000)
+          }
+          "capture" -> {
+            try {
+              throw RuntimeException("Catch this exception!")
+            } catch (e: Exception) {
+              Sentry.captureException(e);
+            }
+          }
+          else -> {
+            result.notImplemented()
+          }
       }
+    }
+  }
+
+  class BrokenWorker(appContext: Context, workerParams: WorkerParameters): Worker(appContext, workerParams)
+  {
+    override fun doWork(): Result
+    {
+      throw RuntimeException("Kotlin background task")
+      return Result.success()
     }
   }
 }
