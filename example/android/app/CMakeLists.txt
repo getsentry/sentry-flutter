@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.6)
 project(sentry-sample LANGUAGES C CXX)
 
 add_library(native-sample SHARED src/main/cpp/native-sample.cpp)
