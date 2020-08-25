@@ -44,6 +44,8 @@ jobs:
         - name: Test
           run: flutter test
         - name: Build ${{ matrix.target }}
+          env:
+            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           run: |
             cd example
             TARGET=${{ matrix.target }}
