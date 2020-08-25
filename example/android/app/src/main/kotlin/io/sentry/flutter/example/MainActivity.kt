@@ -35,10 +35,25 @@ class MainActivity: FlutterActivity() {
               Sentry.captureException(e);
             }
           }
+              "crash" -> {
+              crash();
+          }
+          "native_capture_message" -> {
+              message();
+          }
           else -> {
             result.notImplemented()
           }
       }
+    }
+  }
+
+  external fun crash(): Unit?
+  external fun message(): Unit?
+
+  companion object {
+    init {
+      System.loadLibrary("native-sample")
     }
   }
 

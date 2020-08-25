@@ -190,6 +190,21 @@ class _MyAppState extends State<MyApp> {
                 await channel.invokeMethod<void>('anr');
               },
             ),
+            RaisedButton(
+              child: const Text('Platform: native crash (signal)'),
+              onPressed: () async {
+                const channel = MethodChannel('example.flutter.sentry.io');
+                await channel.invokeMethod<void>('crash');
+              },
+            ),
+            // XXX: Show only relevant buttons for the platform
+            RaisedButton(
+              child: const Text('Platform: native capture message'),
+              onPressed: () async {
+                const channel = MethodChannel('example.flutter.sentry.io');
+                await channel.invokeMethod<void>('native_capture_message');
+              },
+            ),
           ],
         ),
       ),
