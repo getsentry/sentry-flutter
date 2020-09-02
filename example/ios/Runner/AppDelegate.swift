@@ -1,5 +1,6 @@
 import UIKit
 import Flutter
+import Sentry
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {

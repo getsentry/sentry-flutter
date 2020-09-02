@@ -61,8 +61,10 @@ jobs:
             ;;
             esac
   pod-lint:
+    name: Pod lib lint
     runs-on: macos-latest
     steps:
+      - uses: actions/checkout@v2
       - run: pod lib lint ios/sentry_flutter.podspec
   package-analysis:
     runs-on: ubuntu-latest
