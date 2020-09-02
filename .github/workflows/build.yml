@@ -60,6 +60,10 @@ jobs:
             flutter build web
             ;;
             esac
+  pod-lint:
+    runs-on: macos-latest
+    steps:
+      - run: pod lib lint ios/sentry_flutter.podspec
   package-analysis:
     runs-on: ubuntu-latest
     steps:

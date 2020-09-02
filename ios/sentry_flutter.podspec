@@ -5,15 +5,16 @@
 Pod::Spec.new do |s|
   s.name             = 'sentry_flutter'
   s.version          = '0.0.1'
-  s.summary          = 'A new flutter plugin project.'
+  s.summary          = 'Sentry SDK for Flutter.'
   s.description      = <<-DESC
-A new flutter plugin project.
+Sentry SDK for Flutter with support to native through sentry-cocoa.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/getsentry/sentry-flutter'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'Sentry' => 'oss@sentry.io' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
+  s.dependency 'Sentry', '~> 6.0.0-alpha.0'
   s.dependency 'Flutter'
   s.platform = :ios, '8.0'
 
