@@ -38,7 +38,7 @@ class MainActivity: FlutterActivity() {
               "crash" -> {
               crash();
           }
-          "native_capture_message" -> {
+          "cpp_capture_message" -> {
               message();
           }
           else -> {
