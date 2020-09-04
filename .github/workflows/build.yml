@@ -90,3 +90,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: norio-nomura/action-swiftlint@3.1.0
+  ktlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: "ktlint"
+        uses: "vroy/gha-kotlin-linter@v1"
