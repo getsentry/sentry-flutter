@@ -24,7 +24,7 @@ class MainActivity : FlutterActivity() {
           throw Exception("Thrown from Kotlin!")
         }
         "background" -> {
-                            WorkManager.getInstance(this)
+          WorkManager.getInstance(this)
             .enqueue(
               OneTimeWorkRequestBuilder<BrokenWorker>()
                 .build()
