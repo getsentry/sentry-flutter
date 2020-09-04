@@ -23,7 +23,7 @@ import Sentry
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
-  private func handleMessage(call: FlutterMethodCall, result: FlutterResult) -> Void {
+  private func handleMessage(call: FlutterMethodCall, result: FlutterResult) {
     if call.method == "fatalError" {
       fatalError("fatalError")
     } else if call.method == "crash" {
@@ -32,7 +32,7 @@ import Sentry
       let exception = NSException(
         name: NSExceptionName("NSException"),
         reason: "Swift NSException Captured",
-        userInfo: ["details":"lots"])
+        userInfo: ["details": "lots"])
       SentrySDK.capture(exception: exception)
     } else if call.method == "capture_message" {
       SentrySDK.capture(message: "A message from Swift.")
