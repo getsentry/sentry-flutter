@@ -79,7 +79,6 @@ jobs:
             exit 1
           fi
   pod-lint:
-    name: Pod lib lint
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -94,5 +93,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: "ktlint"
-        uses: "vroy/gha-kotlin-linter@v1"
+      - name: ktlint
+        uses: ScaCap/action-ktlint@1.2
+        with:
+          github_token: ${{ secrets.github_token }}
+          android: true
