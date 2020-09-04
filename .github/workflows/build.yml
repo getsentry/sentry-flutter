@@ -60,13 +60,6 @@ jobs:
             flutter build web
             ;;
             esac
-  pod-lint:
-    name: Pod lib lint
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      # https://github.com/CocoaPods/CocoaPods/issues/5275#issuecomment-315461879
-      - run: pod lib lint ios/sentry_flutter.podspec --skip-import-validation
   package-analysis:
     runs-on: ubuntu-latest
     steps:
@@ -85,3 +78,15 @@ jobs:
             echo "Scores must be min 90 for maintenance (until 1.0 ships), 100 for health."
             exit 1
           fi
+  pod-lint:
+    name: Pod lib lint
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      # https://github.com/CocoaPods/CocoaPods/issues/5275#issuecomment-315461879
+      - run: pod lib lint ios/sentry_flutter.podspec --skip-import-validation
+  swift-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: norio-nomura/action-swiftlint@3.1.0
