@@ -69,13 +69,12 @@ jobs:
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Check scores
-        # TODO: Once 1.0.0 lands, change min maintenance points to 100
         run: |
           MAINTENANCE_SCORE=${{ steps.analysis.outputs.maintenance }}
           HEALTH_SCORE=${{ steps.analysis.outputs.health }}
-          if (( $(echo "$MAINTENANCE_SCORE < 90" | bc) )) || (( $(echo "$HEALTH_SCORE < 100" | bc) ))
+          if (( $(echo "$MAINTENANCE_SCORE < 100" | bc) )) || (( $(echo "$HEALTH_SCORE < 100" | bc) ))
           then
-            echo "Scores must be min 90 for maintenance (until 1.0 ships), 100 for health."
+            echo "Scores must be min 100 for maintenance, 100 for health."
             exit 1
           fi
   pod-lint:
@@ -95,8 +94,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: brew install ktlint
       - name: run ktlint
-        run: |
-          ktlint --reporter=checkstyle,output=build/ktlint-report-in-checkstyle-format.xml > /dev/null
+        run: ktlint --reporter=checkstyle,output=build/ktlint-report.xml || true
       - uses: yutailang0119/action-ktlint@v1.0.0
         with:
-          xml_path: build/ktlint-report-in-checkstyle-format.xml
+          xml_path: build/ktlint-report.xml
