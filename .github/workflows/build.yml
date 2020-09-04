@@ -65,7 +65,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - run: pod lib lint ios/sentry_flutter.podspec
+      # https://github.com/CocoaPods/CocoaPods/issues/5275#issuecomment-315461879
+      - run: pod lib lint ios/sentry_flutter.podspec --skip-import-validation
   package-analysis:
     runs-on: ubuntu-latest
     steps:
