@@ -97,4 +97,3 @@ jobs:
         uses: ScaCap/action-ktlint@1.2
         with:
           github_token: ${{ secrets.github_token }}
-          android: true
